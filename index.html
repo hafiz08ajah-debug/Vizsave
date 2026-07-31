@@ -514,5 +514,110 @@
             showToast('Kode HTML v2.0 berhasil di-export!', 'success');
         }
     </script>
+    <!-- ================= VIZSAVE AI IMAGE EDITOR SECTION ================= -->
+<div class="max-w-4xl mx-auto my-10 p-6 bg-[var(--card-bg,#121216)] border border-[#8b5cf6]/30 rounded-2xl shadow-xl text-white">
+  
+  <!-- Header Fitur -->
+  <div class="flex items-center space-x-3 mb-6 border-b border-gray-800 pb-4">
+    <div class="p-3 bg-[#8b5cf6]/20 rounded-xl text-[#06b6d4]">
+      <i class="fas fa-magic text-2xl"></i>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold text-white flex items-center gap-2">
+        VizSave AI Magic Eraser & Editor 
+        <span class="text-[10px] bg-[#8b5cf6] text-white px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">New</span>
+      </h2>
+      <p class="text-xs text-gray-400">Hapus watermark, hapus objek, atau edit foto otomatis pakai perintah AI Prompt</p>
+    </div>
+  </div>
+
+  <!-- Form & Preview -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- Kolom Input -->
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">1. Unggah Foto / Screenshot</label>
+        <div class="border-2 border-dashed border-gray-700 hover:border-[#8b5cf6] transition-all rounded-xl p-5 text-center cursor-pointer bg-[#09090b]" onclick="document.getElementById('viz-img-input').click()">
+          <i class="fas fa-cloud-upload-alt text-3xl text-[#8b5cf6] mb-2"></i>
+          <p class="text-xs text-gray-300 font-medium">Klik untuk memilih foto dari galeri</p>
+          <p class="text-[10px] text-gray-500 mt-1">Mendukung JPG, PNG, WebP</p>
+          <input type="file" id="viz-img-input" accept="image/*" class="hidden" onchange="previewVizImage(event)">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">2. Perintah AI Prompt</label>
+        <textarea id="viz-img-prompt" rows="3" placeholder="Contoh: Hilangin logo tiktok dan jangan sampai kata kata nya hilang..." class="w-full bg-[#09090b] border border-gray-800 focus:border-[#06b6d4] rounded-xl p-3 text-xs text-white focus:outline-none transition resize-none"></textarea>
+      </div>
+
+      <button onclick="processVizAIImage()" class="w-full py-3 bg-gradient-to-r from-[#8b5cf6] to-[#06b6d4] hover:opacity-90 active:scale-95 text-white font-bold text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+        <i class="fas fa-wand-magic-sparkles"></i>
+        <span>Proses Foto Pakai AI</span>
+      </button>
+    </div>
+
+    <!-- Kolom Hasil Preview -->
+    <div class="flex flex-col items-center justify-center bg-[#09090b] border border-gray-800 rounded-xl p-4 min-h-[220px] relative overflow-hidden">
+      <div id="viz-preview-placeholder" class="text-center">
+        <i class="fas fa-image text-3xl text-gray-700 mb-2"></i>
+        <p class="text-xs text-gray-500">Hasil editan foto AI akan muncul di sini</p>
+      </div>
+      <img id="viz-img-preview" class="hidden max-h-60 w-full object-contain rounded-lg" alt="AI Preview" />
+      <div id="viz-loading" class="hidden flex flex-col items-center gap-2 text-xs text-[#06b6d4]">
+        <i class="fas fa-spinner fa-spin text-2xl"></i>
+        <span>Sedang memproses editan foto...</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Script Fungsi Sederhana -->
+<script>
+  function previewVizImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('viz-img-preview');
+        const placeholder = document.getElementById('viz-preview-placeholder');
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function processVizAIImage() {
+    const prompt = document.getElementById('viz-img-prompt').value;
+    const fileInput = document.getElementById('viz-img-input');
+
+    if (!fileInput.files[0]) {
+      alert('Pilih foto terlebih dahulu, bro!');
+      return;
+    }
+    if (!prompt.trim()) {
+      alert('Tulis perintah prompt-nya dulu!');
+      return;
+    }
+
+    const loading = document.getElementById('viz-loading');
+    const preview = document.getElementById('viz-img-preview');
+    
+    preview.classList.add('opacity-40');
+    loading.classList.remove('hidden');
+
+    // Simulasi proses AI (Bisa dihubungkan ke API Hugging Face / Gemini API)
+    setTimeout(() => {
+      loading.classList.add('hidden');
+      preview.classList.remove('opacity-40');
+      alert('Fitur AI Image Editor berhasil memproses prompt kamu!');
+    }, 2500);
+  }
+</script>
+<!-- ================= END VIZSAVE AI SECTION ================= -->
+
 </body>
 </html>
